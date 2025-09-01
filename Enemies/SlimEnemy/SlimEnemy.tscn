@@ -1,0 +1,217 @@
+[gd_scene load_steps=25 format=3 uid="uid://c5qor8hrcwqf5"]
+
+[ext_resource type="Script" uid="uid://osgd485taf2n" path="res://Enemies/SlimEnemy/Scripts/damage_area.gd" id="1_2s2g7"]
+[ext_resource type="Script" uid="uid://cuiggcya5uvep" path="res://Enemies/SlimEnemy/Scripts/hit_area.gd" id="1_l2b88"]
+[ext_resource type="Script" uid="uid://cxrrbebsgy7n5" path="res://Enemies/SlimEnemy/Scripts/slim_enemy.gd" id="1_n8otw"]
+[ext_resource type="Texture2D" uid="uid://cddq20jsbroxo" path="res://Assets/SlimEnemySpriteSheet.png" id="2_yiavg"]
+[ext_resource type="Script" uid="uid://cuevsdgo7e7q" path="res://Enemies/SlimEnemy/Scripts/animation_tree.gd" id="3_denc7"]
+
+[sub_resource type="Animation" id="Animation_denc7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ewnjr"]
+resource_name = "attack_left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [29, 28, 27, 26, 25, 24, 23, 22, 21, 20]
+}
+
+[sub_resource type="Animation" id="Animation_mdilq"]
+resource_name = "attack_right"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_lwqw1"]
+resource_name = "walk_left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [39, 38, 37, 36, 35, 34, 33, 32, 31, 30]
+}
+
+[sub_resource type="Animation" id="Animation_yiavg"]
+resource_name = "walk_right"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_denc7"]
+_data = {
+&"RESET": SubResource("Animation_denc7"),
+&"attack_left": SubResource("Animation_ewnjr"),
+&"attack_right": SubResource("Animation_mdilq"),
+&"walk_left": SubResource("Animation_lwqw1"),
+&"walk_right": SubResource("Animation_yiavg")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2qrdd"]
+animation = &"attack_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rsf56"]
+animation = &"attack_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_yiavg"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_2qrdd")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_rsf56")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5n1wt"]
+animation = &"walk_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0bvdw"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_denc7"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_5n1wt")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_0bvdw")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lwqw1"]
+advance_mode = 2
+advance_expression = "velocity.x"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ewnjr"]
+advance_mode = 2
+advance_expression = "velocity.x"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_huvam"]
+advance_mode = 2
+advance_expression = "hit_area.attacking"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_yiavg"]
+states/Attack/node = SubResource("AnimationNodeBlendSpace1D_yiavg")
+states/Attack/position = Vector2(762, 100)
+states/End/position = Vector2(915, 100)
+states/Start/position = Vector2(299, 100)
+states/Walk/node = SubResource("AnimationNodeBlendSpace1D_denc7")
+states/Walk/position = Vector2(463, 100)
+transitions = ["Start", "Walk", SubResource("AnimationNodeStateMachineTransition_lwqw1"), "Attack", "Walk", SubResource("AnimationNodeStateMachineTransition_ewnjr"), "Walk", "Attack", SubResource("AnimationNodeStateMachineTransition_huvam")]
+graph_offset = Vector2(-89, -50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_337ic"]
+size = Vector2(65, 250)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2s2g7"]
+size = Vector2(160, 220)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwy40"]
+size = Vector2(90, 220)
+
+[node name="SlimEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hit_area", "sprite")]
+collision_layer = 2
+collision_mask = 130
+script = ExtResource("1_n8otw")
+hit_area = NodePath("HitArea")
+sprite = NodePath("Character/Sprite")
+
+[node name="RemoteTransform" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("../Character")
+update_rotation = false
+
+[node name="Character" type="Node2D" parent="."]
+top_level = true
+
+[node name="Sprite" type="Sprite2D" parent="Character"]
+texture = ExtResource("2_yiavg")
+hframes = 10
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_denc7")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Character" node_paths=PackedStringArray("enemy")]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeStateMachine_yiavg")
+advance_expression_base_node = NodePath("../..")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Attack/blend_position = 0
+parameters/Walk/blend_position = 0
+script = ExtResource("3_denc7")
+enemy = NodePath("../..")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(5, 12.5)
+shape = SubResource("RectangleShape2D_337ic")
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_l2b88")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(40, 0)
+shape = SubResource("RectangleShape2D_2s2g7")
+metadata/_edit_group_ = true
+
+[node name="DamageArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_2s2g7")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(5, 0)
+shape = SubResource("RectangleShape2D_hwy40")
+
+[connection signal="area_entered" from="HitArea" to="HitArea" method="_on_area_entered"]
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
+[connection signal="body_entered" from="HitArea" to="HitArea" method="_on_body_entered"]
+[connection signal="body_exited" from="HitArea" to="." method="_on_hit_area_body_exited"]
+[connection signal="body_exited" from="HitArea" to="HitArea" method="_on_body_exited"]
+[connection signal="body_entered" from="DamageArea" to="DamageArea" method="_on_body_entered"]

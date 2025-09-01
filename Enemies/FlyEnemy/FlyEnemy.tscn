@@ -1,0 +1,213 @@
+[gd_scene load_steps=25 format=3 uid="uid://hwltm8avd2oe"]
+
+[ext_resource type="Script" uid="uid://bd45gq2fdslrh" path="res://Enemies/FlyEnemy/Scripts/hit_area.gd" id="1_l6wby"]
+[ext_resource type="Script" uid="uid://fisj7wayk0x4" path="res://Enemies/FlyEnemy/Scripts/fly_enemy.gd" id="1_tdo52"]
+[ext_resource type="Texture2D" uid="uid://c6x2g5rvv45eo" path="res://Assets/FlyEnemySpriteSheet.png" id="2_nixsg"]
+[ext_resource type="Script" uid="uid://1wuyuntpggp0" path="res://Enemies/FlyEnemy/Scripts/damage_area.gd" id="2_tdo52"]
+[ext_resource type="Script" uid="uid://bsuv2kjbe5127" path="res://Enemies/FlyEnemy/Scripts/animation_tree.gd" id="3_rn8ba"]
+
+[sub_resource type="Animation" id="Animation_denc7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_rn8ba"]
+resource_name = "fly_left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_nixsg"]
+resource_name = "fly_right"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [29, 28, 27, 26, 25, 24, 23, 22, 21, 20]
+}
+
+[sub_resource type="Animation" id="Animation_onx1u"]
+resource_name = "shoot_left"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14]
+}
+
+[sub_resource type="Animation" id="Animation_646e2"]
+resource_name = "shoot_right"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [39, 38, 37, 36, 35]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_denc7"]
+_data = {
+&"RESET": SubResource("Animation_denc7"),
+&"fly_left": SubResource("Animation_rn8ba"),
+&"fly_right": SubResource("Animation_nixsg"),
+&"shoot_left": SubResource("Animation_onx1u"),
+&"shoot_right": SubResource("Animation_646e2")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nixsg"]
+animation = &"fly_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rn8ba"]
+animation = &"fly_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_onx1u"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_nixsg")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_rn8ba")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_onx1u"]
+animation = &"shoot_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_646e2"]
+animation = &"shoot_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_2qrdd"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_onx1u")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_646e2")
+blend_point_1/pos = 1.0
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nixsg"]
+advance_mode = 2
+advance_expression = "hit_area.shooting"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rn8ba"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "velocity.x"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_onx1u"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_tdo52"]
+states/Fly/node = SubResource("AnimationNodeBlendSpace1D_onx1u")
+states/Fly/position = Vector2(337, 100)
+states/Shoot/node = SubResource("AnimationNodeBlendSpace1D_2qrdd")
+states/Shoot/position = Vector2(701, 100)
+states/Start/position = Vector2(161, 100)
+transitions = ["Fly", "Shoot", SubResource("AnimationNodeStateMachineTransition_nixsg"), "Shoot", "Fly", SubResource("AnimationNodeStateMachineTransition_rn8ba"), "Start", "Fly", SubResource("AnimationNodeStateMachineTransition_onx1u")]
+graph_offset = Vector2(-303, -125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d0gbd"]
+size = Vector2(120, 120)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tdo52"]
+radius = 1003.29
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kgyra"]
+size = Vector2(130, 130)
+
+[node name="FlyEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hit_area", "sprite")]
+collision_layer = 4
+collision_mask = 256
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_tdo52")
+hit_area = NodePath("SpitArea")
+sprite = NodePath("Character/Sprite")
+
+[node name="RemoteTransform" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("../Character")
+update_rotation = false
+
+[node name="Character" type="Node2D" parent="."]
+top_level = true
+
+[node name="Sprite" type="Sprite2D" parent="Character"]
+texture = ExtResource("2_nixsg")
+hframes = 10
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_denc7")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Character" node_paths=PackedStringArray("enemy")]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeStateMachine_tdo52")
+advance_expression_base_node = NodePath("../..")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Fly/blend_position = -0.000429392
+parameters/Shoot/blend_position = 0
+script = ExtResource("3_rn8ba")
+enemy = NodePath("../..")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_d0gbd")
+
+[node name="SpitArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_l6wby")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="SpitArea"]
+shape = SubResource("CircleShape2D_tdo52")
+metadata/_edit_group_ = true
+
+[node name="DamageArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("2_tdo52")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="DamageArea"]
+shape = SubResource("RectangleShape2D_kgyra")
+
+[connection signal="area_entered" from="SpitArea" to="SpitArea" method="_on_area_entered"]
+[connection signal="body_entered" from="SpitArea" to="SpitArea" method="_on_body_entered"]
+[connection signal="body_exited" from="SpitArea" to="SpitArea" method="_on_body_exited"]
+[connection signal="body_entered" from="DamageArea" to="DamageArea" method="_on_body_entered"]

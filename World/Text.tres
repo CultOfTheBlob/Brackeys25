@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dser0w4t5s1bf"]
+
+[ext_resource type="FontFile" uid="uid://cxq6jj8tgbcd4" path="res://Fonts/Kenney High Square.ttf" id="1_x145w"]
+
+[resource]
+font = ExtResource("1_x145w")
+font_size = 72
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 1)

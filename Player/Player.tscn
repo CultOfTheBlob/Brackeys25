@@ -1,0 +1,445 @@
+[gd_scene load_steps=36 format=3 uid="uid://wy4vbo5nablm"]
+
+[ext_resource type="Script" uid="uid://cjfxea2s5gn4g" path="res://Player/Scripts/player.gd" id="1_q3lat"]
+[ext_resource type="LabelSettings" uid="uid://dser0w4t5s1bf" path="res://World/Text.tres" id="2_8sa4y"]
+[ext_resource type="Script" uid="uid://c8m87pvccwfxp" path="res://Player/Scripts/health.gd" id="2_ddoul"]
+[ext_resource type="Texture2D" uid="uid://djqxrt8tng434" path="res://Assets/HealthBarUnder.png" id="3_6ysni"]
+[ext_resource type="Texture2D" uid="uid://f2ut1yjf1cvr" path="res://Assets/HealthBarOver.png" id="4_vlldt"]
+[ext_resource type="Texture2D" uid="uid://dcbtlmxxwg2ht" path="res://Assets/HealthBarProgress.png" id="5_s1rgi"]
+[ext_resource type="Texture2D" uid="uid://ov22k3u7u0ww" path="res://Assets/Parallax0.png" id="6_7v5gs"]
+[ext_resource type="Texture2D" uid="uid://dn6f73ortqvjx" path="res://Assets/PlayerSpriteSheet.png" id="6_s1rgi"]
+[ext_resource type="Shader" uid="uid://dcglnraeq6dnd" path="res://Player/sprite.gdshader" id="6_v0k0e"]
+[ext_resource type="Texture2D" uid="uid://wt1h8gn7rlrn" path="res://Assets/Parallax1.png" id="7_8sa4y"]
+[ext_resource type="Script" uid="uid://cqgy3h2xhhlwl" path="res://Player/Scripts/attack_area.gd" id="7_vlldt"]
+[ext_resource type="Texture2D" uid="uid://c7uhq3u2j1uxc" path="res://Assets/Parallax2.png" id="8_3nb2p"]
+[ext_resource type="Script" uid="uid://uq5kmt2s3b1t" path="res://Player/Scripts/parry_area.gd" id="8_s1rgi"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://b1gs7umaw7jbd" path="res://Player/PlayerAnimationTree.tres" id="9_0j2ni"]
+[ext_resource type="Texture2D" uid="uid://0nb40ek7eh1j" path="res://Assets/Parallax3.png" id="9_d7xyo"]
+[ext_resource type="Script" uid="uid://b5f2inyee32ss" path="res://Player/Scripts/animation_tree.gd" id="9_j23h2"]
+[ext_resource type="Texture2D" uid="uid://b61fkghum1cs0" path="res://Assets/Parallax4.png" id="10_evw08"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wa8t"]
+shader = ExtResource("6_v0k0e")
+shader_parameter/toggle = false
+
+[sub_resource type="Animation" id="Animation_j23h2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [22]
+}
+
+[sub_resource type="Animation" id="Animation_dm7nj"]
+resource_name = "attack_left"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [98, 97, 96, 95, 94, 93, 92]
+}
+
+[sub_resource type="Animation" id="Animation_p7tob"]
+resource_name = "attack_right"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [33, 34, 35, 36, 37, 38, 39]
+}
+
+[sub_resource type="Animation" id="Animation_3nb2p"]
+resource_name = "idling_left"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [109, 108, 107, 106, 105, 104, 103]
+}
+
+[sub_resource type="Animation" id="Animation_8sa4y"]
+resource_name = "idling_right"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [44, 45, 46, 47, 48, 49, 50]
+}
+
+[sub_resource type="Animation" id="Animation_5wa8t"]
+resource_name = "jump_left"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [76, 75, 74, 73, 72, 71, 70]
+}
+
+[sub_resource type="Animation" id="Animation_v0k0e"]
+resource_name = "jump_right"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [11, 12, 13, 14, 15, 16, 17]
+}
+
+[sub_resource type="Animation" id="Animation_evw08"]
+resource_name = "parry_left"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [131, 130, 129, 128, 127, 126]
+}
+
+[sub_resource type="Animation" id="Animation_d7xyo"]
+resource_name = "parry_right"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [110, 111, 112, 113, 114, 115]
+}
+
+[sub_resource type="Animation" id="Animation_7v5gs"]
+resource_name = "shoot_left"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [65, 64, 63, 62, 61, 60, 59, 58, 57, 56, 55]
+}
+
+[sub_resource type="Animation" id="Animation_3mea3"]
+resource_name = "shoot_right"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_0j2ni"]
+resource_name = "walk_left"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [87, 86, 85, 84, 83, 82, 81, 80]
+}
+
+[sub_resource type="Animation" id="Animation_s1rgi"]
+resource_name = "walk_right"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [22, 23, 24, 25, 26, 27, 28, 29]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0j2ni"]
+_data = {
+&"RESET": SubResource("Animation_j23h2"),
+&"attack_left": SubResource("Animation_dm7nj"),
+&"attack_right": SubResource("Animation_p7tob"),
+&"idling_left": SubResource("Animation_3nb2p"),
+&"idling_right": SubResource("Animation_8sa4y"),
+&"jump_left": SubResource("Animation_5wa8t"),
+&"jump_right": SubResource("Animation_v0k0e"),
+&"parry_left": SubResource("Animation_evw08"),
+&"parry_right": SubResource("Animation_d7xyo"),
+&"shoot_left": SubResource("Animation_7v5gs"),
+&"shoot_right": SubResource("Animation_3mea3"),
+&"walk_left": SubResource("Animation_0j2ni"),
+&"walk_right": SubResource("Animation_s1rgi")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2ndj"]
+size = Vector2(90, 180)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ysni"]
+size = Vector2(96, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vlldt"]
+size = Vector2(96, 120)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("left_eye", "right_eye", "dash_timer", "dash_cooldown", "health", "sprite", "label", "camera", "attack_area", "parry_area")]
+collision_mask = 3
+script = ExtResource("1_q3lat")
+jump_velocity = 5000.0
+left_eye = NodePath("CanvasLayer/LeftEye")
+right_eye = NodePath("CanvasLayer/RightEye")
+dash_timer = NodePath("Timers/DashTime")
+dash_cooldown = NodePath("Timers/DashCooldown")
+health = NodePath("CanvasLayer/HealthBar")
+sprite = NodePath("Character/Sprite")
+label = NodePath("CanvasLayer/Timer")
+camera = NodePath("Camera")
+attack_area = NodePath("AttackArea")
+parry_area = NodePath("ParryArea")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Timer" type="Label" parent="CanvasLayer"]
+offset_left = 31.0
+offset_top = 103.0
+offset_right = 71.0
+offset_bottom = 126.0
+size_flags_horizontal = 0
+text = "00:00"
+label_settings = ExtResource("2_8sa4y")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer"]
+offset_left = 10.0
+offset_top = -120.0
+offset_right = 330.0
+offset_bottom = 200.0
+texture_under = ExtResource("3_6ysni")
+texture_over = ExtResource("4_vlldt")
+texture_progress = ExtResource("5_s1rgi")
+script = ExtResource("2_ddoul")
+
+[node name="LeftEye" type="ColorRect" parent="CanvasLayer"]
+offset_left = 30.0
+offset_top = 40.0
+offset_right = 40.0
+offset_bottom = 60.0
+color = Color(0.829026, 0.113053, 0, 1)
+
+[node name="RightEye" type="ColorRect" parent="CanvasLayer"]
+offset_left = 60.0
+offset_top = 40.0
+offset_right = 70.0
+offset_bottom = 60.0
+color = Color(2.45467e-06, 0.598635, 0.273907, 1)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
+visible = false
+
+[node name="ParallaxLayer0" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(0, 0)
+motion_mirroring = Vector2(11520, 0)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer0"]
+
+[node name="ParallaxLayer1" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(0.1, 0)
+motion_mirroring = Vector2(11520, 0)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer1"]
+texture = ExtResource("6_7v5gs")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(0.2, 0)
+motion_mirroring = Vector2(11520, 0)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource("7_8sa4y")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(0.3, 0)
+motion_mirroring = Vector2(11520, 0)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource("8_3nb2p")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(0.5, 0)
+motion_mirroring = Vector2(11520, 0)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer4"]
+texture = ExtResource("9_d7xyo")
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_scale = Vector2(1.2, 0)
+motion_offset = Vector2(0, 100)
+motion_mirroring = Vector2(11520, 0)
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer5"]
+texture = ExtResource("10_evw08")
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="RemoteTransform" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("../Character")
+update_rotation = false
+
+[node name="Character" type="Node2D" parent="."]
+top_level = true
+
+[node name="Sprite" type="Sprite2D" parent="Character"]
+material = SubResource("ShaderMaterial_5wa8t")
+texture = ExtResource("6_s1rgi")
+hframes = 11
+vframes = 12
+frame = 22
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_0j2ni")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Character" node_paths=PackedStringArray("player")]
+root_node = NodePath("../..")
+tree_root = ExtResource("9_0j2ni")
+advance_expression_base_node = NodePath("../..")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Attack/blend_position = 0
+parameters/Idle/blend_position = 0.000429392
+parameters/Jump/blend_position = 0
+parameters/Parry/blend_position = 0.000429392
+parameters/Shoot/blend_position = 0
+parameters/Walk/blend_position = 0.0
+script = ExtResource("9_j23h2")
+player = NodePath("../..")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 3)
+shape = SubResource("RectangleShape2D_l2ndj")
+
+[node name="AttackArea" type="Area2D" parent="."]
+position = Vector2(100, 3)
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+script = ExtResource("7_vlldt")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("RectangleShape2D_6ysni")
+
+[node name="ParryArea" type="Area2D" parent="."]
+position = Vector2(100, 3)
+collision_layer = 3
+collision_mask = 2
+monitoring = false
+script = ExtResource("8_s1rgi")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape" type="CollisionShape2D" parent="ParryArea"]
+shape = SubResource("RectangleShape2D_vlldt")
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="DashTime" type="Timer" parent="Timers"]
+wait_time = 0.2
+one_shot = true
+
+[node name="DashCooldown" type="Timer" parent="Timers"]
+one_shot = true
+
+[connection signal="area_entered" from="AttackArea" to="AttackArea" method="_on_area_entered"]
+[connection signal="area_entered" from="ParryArea" to="ParryArea" method="_on_area_entered"]
+[connection signal="timeout" from="Timers/DashTime" to="." method="_on_dash_time_timeout"]
+[connection signal="timeout" from="Timers/DashCooldown" to="." method="_on_dash_cooldown_timeout"]
